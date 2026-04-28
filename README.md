@@ -1,5 +1,9 @@
 # OG Image Generator
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Built with Next.js](https://img.shields.io/badge/Built%20with-Next.js%2016-black)](https://nextjs.org)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black)](https://og-image-generator-ruddy-three.vercel.app/)
+
 Generate dynamic Open Graph images on the fly with custom templates. Live editor, copy URL, download PNG.
 
 **[→ Live demo](https://og-image-generator-ruddy-three.vercel.app/)**
@@ -111,6 +115,6 @@ Built by **Bernardo Fernandes de Sousa**
 
 ## License
 
-All rights reserved © 2026 Bernardo Fernandes de Sousa.
+Licensed under the [Apache License, Version 2.0](LICENSE).
 
-This source is published for portfolio and educational purposes. No license is granted for reuse, modification, or redistribution.
+Copyright © 2026 Bernardo Fernandes de Sousa.
