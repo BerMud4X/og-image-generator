@@ -19,6 +19,9 @@ export default function Home() {
   const [template, setTemplate] = useState ("minimal-dark");
   const [imgSrc, setImgSrc] = useState("");
   const [copied, setCopied] = useState(false);
+  const [origin, setOrigin] = useState("");
+  const [snippetCopied, setSnippetCopied] = useState(false);
+
 
   // 2. Helper qui construit l'URL avec les params actuels
   const buildUrl = () => {
@@ -34,12 +37,38 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [title, subtitle, template]);
 
+  useEffect(() => {
+    setOrigin(window.location.origin);
+  }, []);
+
   // 4. Copy URL handler
   const handleCopy = async () => {
     const fullUrl = `${window.location.origin}${buildUrl()}`;
     await navigator.clipboard.writeText(fullUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  // 4.1 HandleDownload
+  const handleDownload = async () => {
+    const url = `${window.location.origin}${buildUrl()}`;
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = `og-${title.replace(/\s+/g, "-").toLowerCase()}.png`;
+    link.click();
+    URL.revokeObjectURL(objectUrl);
+  };
+
+  // 4.2 Copy meta snippet
+  const fullImageUrl =  origin ? `${origin}${buildUrl()}` : buildUrl();
+  const metaSnippet = `<meta property="og:image" content="${fullImageUrl}" />`;
+  const handleCopySnippet = async () => {
+    await navigator.clipboard.writeText(metaSnippet);
+    setSnippetCopied(true);
+    setTimeout(() => setSnippetCopied(false), 2000);
   };
 
   // 5. UI
@@ -87,20 +116,46 @@ export default function Home() {
           </Select>
         </div>
 
-        <Button onClick={handleCopy} className="w-full">
-          {copied ? "Copied!" : "Copy image URL"}
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={handleCopy} className="flex-1">
+            {copied ? "Copied!" : "Copy image URL"}
+          </Button>
+          <Button onClick={handleDownload} variant="outline" className="flex-1">
+            Download image
+          </Button>
+        </div>
+        <div className="flex space-y-2">
+          <label>Html snippet</label>
+          <div className="relative">
+            <pre className="text-xs bg-muted p-3 pr-20 rouded-mb overflow-x-auto whitespace-pre-warp break-all border">
+              <code>{metaSnippet}</code>
+            </pre>
+            <Button
+              size="sm"
+              variant="ghost"
+              className="absolute top-2 right-2 h-7"
+              onClick={handleCopySnippet}
+            >
+              {snippetCopied ? "Copied!" : "Copy"}
+            </Button>
+          </div>
+        </div>
       </section>
 
       {/* Preview à droite */}
-      <section className="flex items-start justify-center">
+      <section className="flex flex-col items-center gap-3">
         {imgSrc && (
-          <img
-            src={imgSrc}
-            alt="OG preview"
-            className="w-full border rounded-lg shadow-lg"
-            style={{ aspectRatio: "1200 / 630" }}
-          />
+          <>
+            <img
+              src={imgSrc}
+              alt="OG preview"
+              className="w-full border rounded-lg shadow-lg"
+              style={{ aspectRatio: "1200 / 630" }}
+            />
+            <div className="text-xs text-muted-foreground font-mono">
+              1200 x 630
+            </div>
+          </>
         )}
       </section>
     </main>
