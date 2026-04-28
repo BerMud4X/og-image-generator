@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import type { NextRequest } from "next/server";
+import { templates, type TemplateName } from "./templates";
 
 async function loadGoogleFont(family: string, text: string) {
   const url = `https://fonts.googleapis.com/css2?family=${family}&text=${encodeURIComponent(text)}`;
@@ -13,48 +14,26 @@ export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
   const title = searchParams.get("title") ?? "Hello World";
   const subtitle = searchParams.get("subtitle") ?? "Built with @vercel/og";
-  const theme = searchParams.get("theme") === "dark" ? "dark" : "light";
 
-  const fontData = await loadGoogleFont("Inter:wght@600", title + subtitle);
+  const templateName = (searchParams.get("template") ?? "minimal-dark") as TemplateName;
+  const t = templates[templateName] ?? templates["minimal-dark"];
+  const { Component: Template, fonts: templateFonts } = t;
 
-  const bg = theme === "dark" ? "#0a0a0a" : "#ffffff";
-  const fg = theme === "dark" ? "#ffffff" : "#0a0a0a";
-  const muted = theme === "dark" ? "#a1a1aa" : "#71717a";
+  // Include common chars (digits, $, terminal chars) so all templates render correctly
+  const text = title + subtitle + " $0123456789>:!@#";
 
-  return new ImageResponse(
-    (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
-          backgroundColor: bg,
-          padding: "80px",
-          fontFamily: "Inter",
-        }}
-      >
-        <div style={{ fontSize: 72, color: fg, lineHeight: 1.1 }}>
-          {title}
-        </div>
-        <div style={{ fontSize: 32, color: muted, marginTop: 24 }}>
-          {subtitle}
-        </div>
-      </div>
-    ),
-    {
-      width: 1200,
-      height: 630,
-      fonts: [
-        {
-          name: "Inter",
-          data: fontData,
-          style: "normal",
-          weight: 600,
-        },
-      ],
-    }
+  const loadedFonts = await Promise.all(
+    templateFonts.map(async (f) => ({
+      name: f.name,
+      data: await loadGoogleFont(f.family, text),
+      style: "normal" as const,
+      weight: f.weight as 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900,
+    }))
   );
+
+  return new ImageResponse(<Template title={title} subtitle={subtitle} />, {
+    width: 1200,
+    height: 630,
+    fonts: loadedFonts,
+  });
 }

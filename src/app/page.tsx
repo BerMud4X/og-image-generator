@@ -4,18 +4,25 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";  
 
 export default function Home() {
   // 1. State
   const [title, setTitle] = useState("Mon Portfolio");
-  const [subtitle, setSubtitle] = useState("Fernando Sousa");
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [subtitle, setSubtitle] = useState("Développeur Web");
+  const [template, setTemplate] = useState ("minimal-dark");
   const [imgSrc, setImgSrc] = useState("");
   const [copied, setCopied] = useState(false);
 
   // 2. Helper qui construit l'URL avec les params actuels
   const buildUrl = () => {
-    const params = new URLSearchParams({ title, subtitle, theme });
+    const params = new URLSearchParams({ title, subtitle, template });
     return `/api/og?${params.toString()}`;
   };
 
@@ -25,7 +32,7 @@ export default function Home() {
       setImgSrc(buildUrl());
     }, 300);
     return () => clearTimeout(timer);
-  }, [title, subtitle, theme]);
+  }, [title, subtitle, template]);
 
   // 4. Copy URL handler
   const handleCopy = async () => {
@@ -66,21 +73,18 @@ export default function Home() {
         </div>
 
         <div className="space-y-2">
-          <Label>Theme</Label>
-          <div className="flex gap-2">
-            <Button
-              variant={theme === "light" ? "default" : "outline"}
-              onClick={() => setTheme("light")}
-            >
-              Light
-            </Button>
-            <Button
-              variant={theme === "dark" ? "default" : "outline"}
-              onClick={() => setTheme("dark")}
-            >
-              Dark
-            </Button>
-          </div>
+          <Label htmlFor="template">Template</Label>
+          <Select value={template} onValueChange={setTemplate}>
+            <SelectTrigger id="template">
+              <SelectValue />
+              </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="minimal-dark">Minimal Dark</SelectItem>
+              <SelectItem value="gradient-bold">Gradient Bold</SelectItem>
+              <SelectItem value="terminal">Terminal</SelectItem>
+              <SelectItem value="magazine">Magazine</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
         <Button onClick={handleCopy} className="w-full">
