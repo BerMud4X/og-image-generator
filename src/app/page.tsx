@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/icons";
 import {
   Select,
   SelectContent,
@@ -73,7 +74,34 @@ export default function Home() {
 
   // 5. UI
   return (
-    <main className="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 min-h-screen max-w-7xl mx-auto">
+    <div className="min-h-screen flex flex-col">
+      <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
+          <div className="font-semibold text-lg">OG Image Generator</div>
+          <nav className="flex items-center gap-4">
+            <a
+              href="https://github.com/BerMud4X/og-image-generator"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <GithubIcon />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/bernardo-fernandes-de-sousa-93262121b/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <LinkedinIcon />
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <main className="flex-1 w-full grid grid-cols-1 md:grid-cols-2 gap-8 p-8 max-w-7xl mx-auto">
       {/* Form à gauche */}
       <section className="space-y-6">
         <div>
@@ -124,10 +152,10 @@ export default function Home() {
             Download image
           </Button>
         </div>
-        <div className="flex space-y-2">
-          <label>Html snippet</label>
+        <div className="space-y-2">
+          <Label>HTML snippet</Label>
           <div className="relative">
-            <pre className="text-xs bg-muted p-3 pr-20 rouded-mb overflow-x-auto whitespace-pre-warp break-all border">
+            <pre className="text-xs bg-muted p-3 pr-20 rounded-md overflow-x-auto whitespace-pre-wrap break-all border">
               <code>{metaSnippet}</code>
             </pre>
             <Button
@@ -159,5 +187,33 @@ export default function Home() {
         )}
       </section>
     </main>
+
+      <footer className="border-t mt-auto ">
+         <div className="max-w-7xl mx-auto px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm text-muted-foreground">
+          <div>
+            Made with ❤️ by{" "}
+            <a
+              href="https://www.linkedin.com/in/bernardo-fernandes-de-sousa-93262121b/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground transition-colors"
+            >
+              Bernardo
+            </a>
+          </div>
+          <div>
+            Source code on{" "}
+            <a
+              href="https://github.com/BerMud4X/og-image-generator"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground transition-colors"
+            >
+              GitHub
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 }
