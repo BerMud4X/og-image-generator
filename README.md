@@ -100,10 +100,28 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Roadmap
 
-- [ ] Custom accent color per template
+### Done
+
+- [x] Custom accent color per template
+- [x] More templates (Polaroid, Code Snippet, Postcard, Ticket, Light Minimal)
+
+### Features
+
 - [ ] Logo upload (data URL, embedded as `<img>`)
-- [ ] More templates (postcard, ticket, code-snippet, quote)
+- [ ] Font picker (Inter / Geist / Space Grotesk / Playfair / JetBrains Mono)
+- [ ] Background pattern overlay (noise, grid, dots)
+- [ ] Emoji support (Twemoji rendering)
 - [ ] OG image preset library (curated examples)
+
+### UX polish
+
+- [ ] Empty state when title is blank
+- [ ] Skeleton loader instead of "Loading…" text
+- [ ] Template transition animation (cross-fade on switch)
+- [ ] "Open in new tab" button (full-size preview)
+
+### Tech
+
 - [ ] Optional API key + rate limiting (if abuse becomes an issue)
 
 ## Author

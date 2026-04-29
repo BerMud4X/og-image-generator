@@ -4,7 +4,11 @@ export const fonts = [
   { name: "JetBrains Mono", family: "JetBrains+Mono:wght@500", weight: 500 },
 ];
 
-export default function Terminal({ title, subtitle }: TemplateProps) {
+export default function Terminal({
+  title,
+  subtitle,
+  accent = "#f97316",
+}: TemplateProps) {
   return (
     <div
       style={{
@@ -94,7 +98,7 @@ export default function Terminal({ title, subtitle }: TemplateProps) {
               width: 24,
               height: 64,
               marginLeft: 12,
-              backgroundColor: "#f97316",
+              backgroundColor: accent,
             }}
           />
         </div>

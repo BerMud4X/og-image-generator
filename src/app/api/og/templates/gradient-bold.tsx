@@ -4,7 +4,11 @@ export const fonts = [
   { name: "Inter", family: "Inter:wght@700", weight: 700 },
 ];
 
-export default function GradientBold({ title, subtitle }: TemplateProps) {
+export default function GradientBold({
+  title,
+  subtitle,
+  accent = "#f97316",
+}: TemplateProps) {
   return (
     <div
       style={{
@@ -15,8 +19,7 @@ export default function GradientBold({ title, subtitle }: TemplateProps) {
         justifyContent: "center",
         padding: "80px",
         fontFamily: "Inter",
-        backgroundImage:
-          "linear-gradient(135deg, #6366f1 0%, #ec4899 50%, #f97316 100%)",
+        backgroundImage: `linear-gradient(135deg, #6366f1 0%, #ec4899 50%, ${accent} 100%)`,
       }}
     >
       <div style={{ display: "flex", flexDirection: "column" }}>

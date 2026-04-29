@@ -5,7 +5,11 @@ export const fonts = [
   { name: "Inter", family: "Inter:wght@400", weight: 400 },
 ];
 
-export default function Magazine({ title, subtitle }: TemplateProps) {
+export default function Magazine({
+  title,
+  subtitle,
+  accent = "#f97316",
+}: TemplateProps) {
   return (
     <div
       style={{
@@ -22,7 +26,7 @@ export default function Magazine({ title, subtitle }: TemplateProps) {
           display: "flex",
           width: 16,
           height: "100%",
-          backgroundColor: "#f97316",
+          backgroundColor: accent,
         }}
       />
 

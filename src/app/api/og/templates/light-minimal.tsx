@@ -1,14 +1,10 @@
-export type TemplateProps = {
-  title: string;
-  subtitle: string;
-  accent?: string;
-};
+import type { TemplateProps } from "./minimal-dark";
 
 export const fonts = [
   { name: "Inter", family: "Inter:wght@600", weight: 600 },
 ];
 
-export default function MinimalDark({
+export default function LightMinimal({
   title,
   subtitle,
   accent = "#f97316",
@@ -21,7 +17,7 @@ export default function MinimalDark({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        backgroundColor: "#0a0a0a",
+        backgroundColor: "#fafafa",
         padding: "80px",
         fontFamily: "Inter",
       }}
@@ -42,7 +38,7 @@ export default function MinimalDark({
         <div
           style={{
             fontSize: 84,
-            color: "#ffffff",
+            color: "#0a0a0a",
             lineHeight: 1.05,
             letterSpacing: "-0.02em",
           }}
@@ -52,7 +48,7 @@ export default function MinimalDark({
         <div
           style={{
             fontSize: 28,
-            color: "#a1a1aa",
+            color: "#71717a",
             marginTop: 16,
           }}
         >

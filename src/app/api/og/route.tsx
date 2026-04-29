@@ -19,6 +19,9 @@ export async function GET(request: NextRequest) {
   const t = templates[templateName] ?? templates["minimal-dark"];
   const { Component: Template, fonts: templateFonts } = t;
 
+  // Optional accent color override (hex string). Templates have their own defaults.
+  const accent = searchParams.get("accent") ?? undefined;
+
   // Include common chars (digits, $, terminal chars) so all templates render correctly
   const text = title + subtitle + " $0123456789>:!@#";
 
@@ -31,9 +34,12 @@ export async function GET(request: NextRequest) {
     }))
   );
 
-  return new ImageResponse(<Template title={title} subtitle={subtitle} />, {
-    width: 1200,
-    height: 630,
-    fonts: loadedFonts,
-  });
+  return new ImageResponse(
+    <Template title={title} subtitle={subtitle} accent={accent} />,
+    {
+      width: 1200,
+      height: 630,
+      fonts: loadedFonts,
+    }
+  );
 }
